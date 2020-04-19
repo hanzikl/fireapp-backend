@@ -22,6 +22,14 @@ dependencies {
     }
 }
 
+// mockito
+repositories { jcenter() }
+dependencies { testCompile "org.mockito:mockito-core:2.+" }
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
 test {
     useJUnitPlatform()
 }
