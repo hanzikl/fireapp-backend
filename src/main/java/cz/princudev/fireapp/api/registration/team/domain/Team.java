@@ -1,19 +1,20 @@
-package cz.princudev.fireapp.api.registration.domain;
+package cz.princudev.fireapp.api.registration.team.domain;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class Team implements TeamState {
 
     private Long id;
 
-    private Set<User> userSet;
+    private Set<UserState> userSet;
 
+    @Override
     public Set<UserState> getUsers() {
         return new HashSet<>(userSet);
     }

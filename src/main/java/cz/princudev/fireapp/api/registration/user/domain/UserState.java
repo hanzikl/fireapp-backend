@@ -1,4 +1,4 @@
-package cz.princudev.fireapp.api.registration.domain;
+package cz.princudev.fireapp.api.registration.user.domain;
 
 public interface UserState {
 

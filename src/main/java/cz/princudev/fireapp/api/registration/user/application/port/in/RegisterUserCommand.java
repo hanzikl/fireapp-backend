@@ -1,4 +1,4 @@
-package cz.princudev.fireapp.api.registration.application.port.in;
+package cz.princudev.fireapp.api.registration.user.application.port.in;
 
 import lombok.Getter;
 import lombok.NonNull;

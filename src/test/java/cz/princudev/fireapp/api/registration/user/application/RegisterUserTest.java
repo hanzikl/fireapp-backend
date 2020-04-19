@@ -1,10 +1,10 @@
-package cz.princudev.fireapp.api.registration.application;
+package cz.princudev.fireapp.api.registration.user.application;
 
 
-import cz.princudev.fireapp.api.registration.application.port.in.RegisterUserCommand;
-import cz.princudev.fireapp.api.registration.application.port.in.RegisterUserUseCase;
-import cz.princudev.fireapp.api.registration.application.port.out.PersistUserPort;
-import cz.princudev.fireapp.api.registration.domain.UserState;
+import cz.princudev.fireapp.api.registration.user.application.port.in.RegisterUserCommand;
+import cz.princudev.fireapp.api.registration.user.application.port.in.RegisterUserUseCase;
+import cz.princudev.fireapp.api.registration.user.application.port.out.PersistUserPort;
+import cz.princudev.fireapp.api.registration.user.domain.UserState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
