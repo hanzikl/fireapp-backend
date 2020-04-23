@@ -5,20 +5,19 @@ import cz.princudev.fireapp.api.registration.team.application.port.in.RegisterTe
 import cz.princudev.fireapp.api.registration.team.application.port.in.RegisterTeamUseCase;
 import cz.princudev.fireapp.api.registration.team.application.port.out.FindUserAndTeamPort;
 import cz.princudev.fireapp.api.registration.team.application.port.out.PersistTeamPort;
-import cz.princudev.fireapp.api.registration.team.domain.TeamState;
+import cz.princudev.fireapp.api.registration.team.domain.Team;
 import cz.princudev.fireapp.api.registration.team.domain.UserState;
-import org.junit.Assert;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
@@ -38,36 +37,20 @@ class RegisterTeamTest {
     @InjectMocks
     private final RegisterTeamUseCase registerTeamUseCase = new RegisterTeamService(findUserAndTeamPort, persistTeamPort); // TODO
 
-    @Captor
-    ArgumentCaptor<TeamState> acTeamState = ArgumentCaptor.forClass(TeamState.class);
-
     @Test
     void test_registerTeam() {
 
-        UserState expectedUser = new UserState() {
-            @Override
-            public Long getId() {
-                return 5L;
-            }
+        TestUser existingUser = new TestUser(5L, "Karlos");
 
-            @Override
-            public String getName() {
-                return "Karlos";
-            }
-        };
-
-        when(findUserAndTeamPort.findUser(eq(5L))).thenReturn(expectedUser);
+        when(findUserAndTeamPort.findUser(eq(5L))).thenReturn(existingUser);
 
         registerTeamUseCase.registerTeam(new RegisterTeamCommand(5L));
 
-        verify(persistTeamPort).persistTeam(acTeamState.capture());
+        Team expectedTeam = Team.builder()
+                .userSet(Collections.singleton(existingUser))
+                .build();
 
-        Set<UserState> expectedUserSet = new HashSet<>();
-        expectedUserSet.add(expectedUser);
-
-        Assert.assertEquals("team must have one given user",
-                expectedUserSet,
-                acTeamState.getValue().getUsers());
+        verify(persistTeamPort).persistTeam(eq(expectedTeam));
     }
 
     @Test
@@ -84,30 +67,16 @@ class RegisterTeamTest {
     @Test
     void test_UserAlreadyInTeamShouldThrowException() {
 
-        UserState expectedUser = new UserState() {
-            @Override
-            public Long getId() {
-                return 12L;
-            }
-            @Override
-            public String getName() {
-                return "Andy";
-            }
-        };
+        TestUser expectedUser = new TestUser(12L, "Andy");
+        TestUser anotherUserInTeam = new TestUser(28L, "James");
 
         when(findUserAndTeamPort.findUser(eq(12L))).thenReturn(expectedUser);
 
-        TeamState existingTeam = new TeamState() {
-            @Override
-            public Long getId() {
-                return 1L;
-            }
-
-            @Override
-            public Set<UserState> getUsers() {
-                return Collections.singleton(expectedUser);
-            }
-        };
+        Team existingTeam = Team.builder()
+                .id(1L)
+                .userSet(Stream.of(expectedUser, anotherUserInTeam)
+                        .collect(Collectors.toSet()))
+                .build();
 
         when(findUserAndTeamPort.findUserTeam(expectedUser)).thenReturn(existingTeam);
 
@@ -117,6 +86,13 @@ class RegisterTeamTest {
                 "when user is already in team, exception must be thrown");
     }
 
+
+    @Getter
+    @RequiredArgsConstructor
+    private static final class TestUser implements UserState {
+        private final Long id;
+        private final String name;
+    }
 
 
 }
