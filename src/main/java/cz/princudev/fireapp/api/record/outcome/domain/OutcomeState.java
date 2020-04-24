@@ -9,6 +9,8 @@ public interface OutcomeState {
 
     LocalDate getDate();
 
+    OutcomeCategory getCategory();
+
     UserState getUser();
 
     BigDecimal getAmount();

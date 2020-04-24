@@ -18,6 +18,8 @@ public class Outcome implements OutcomeState {
 
     private final LocalDate date;
 
+    private final OutcomeCategory category;
+
     private final UserState user;
 
     private final BigDecimal amount;

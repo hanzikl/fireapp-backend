@@ -4,6 +4,7 @@ import cz.princudev.fireapp.api.record.outcome.application.port.in.AddRecordOutc
 import cz.princudev.fireapp.api.record.outcome.application.port.in.AddRecordOutcomeUseCase;
 import cz.princudev.fireapp.api.record.outcome.application.port.out.PersistOutcomePort;
 import cz.princudev.fireapp.api.record.outcome.domain.Outcome;
+import cz.princudev.fireapp.api.record.outcome.domain.OutcomeCategory;
 import cz.princudev.fireapp.api.record.outcome.domain.UserState;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,19 @@ class RecordOutcomeTest {
     void test_addOutcomeNotSplitToTeam() {
 
         UserState user = new TestUser(12L);
-        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, LocalDate.of(2018, 9, 11), new BigDecimal("12.50"), false);
+        AddRecordOutcomeCommand command = AddRecordOutcomeCommand.builder()
+                .user(user)
+                .category(OutcomeCategory.ALCOHOL)
+                .date(LocalDate.of(2018, 9, 11))
+                .amount(new BigDecimal("12.50"))
+                .splitToTeam(false)
+                .build();
 
         addRecordOutcomeUseCase.addOutcomeRecord(command);
 
         Outcome expectedOutcome = Outcome.builder()
                 .user(user)
+                .category(OutcomeCategory.ALCOHOL)
                 .date(LocalDate.of(2018, 9, 11))
                 .amount(new BigDecimal("12.50"))
                 .splitToTeam(false)
@@ -52,12 +60,20 @@ class RecordOutcomeTest {
     @Test
     void test_addOutcomeSplitToTeam() {
         UserState user = new TestUser(7L);
-        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, LocalDate.of(2020, 4, 30), new BigDecimal("843.00"), true);
+
+        AddRecordOutcomeCommand command = AddRecordOutcomeCommand.builder()
+                .user(user)
+                .category(OutcomeCategory.HOLIDAY_AND_RELAX)
+                .date(LocalDate.of(2020, 4, 30))
+                .amount(new BigDecimal("843.00"))
+                .splitToTeam(true)
+                .build();
 
         addRecordOutcomeUseCase.addOutcomeRecord(command);
 
         Outcome expectedOutcome = Outcome.builder()
                 .user(user)
+                .category(OutcomeCategory.HOLIDAY_AND_RELAX)
                 .date(LocalDate.of(2020, 4, 30))
                 .amount(new BigDecimal("843.00"))
                 .splitToTeam(true)
@@ -73,16 +89,19 @@ class RecordOutcomeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> addRecordOutcomeUseCase.addOutcomeRecord(new AddRecordOutcomeCommand(
-                        user, LocalDate.of(1989, 11, 17), new BigDecimal("-1"), true)),
+                () -> addRecordOutcomeUseCase.addOutcomeRecord(
+                        AddRecordOutcomeCommand.builder()
+                                .user(user)
+                                .category(OutcomeCategory.FUN)
+                                .date(LocalDate.of(2020, 4, 30))
+                                .amount(new BigDecimal("-1"))
+                                .splitToTeam(true)
+                                .build()),
                 "negative amount - exception must be thrown");
 
     }
 
-
-
-
-        @Getter
+    @Getter
     @RequiredArgsConstructor
     private static final class TestUser implements UserState {
         private final Long id;
