@@ -6,19 +6,21 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
+@Getter
 @RequiredArgsConstructor
 public class AddRecordOutcomeCommand {
 
     @NonNull
-    @Getter
     private final UserState user;
 
     @NonNull
-    @Getter
+    private final LocalDate date;
+
+    @NonNull
     private final BigDecimal amount;
 
-    @Getter
     private final boolean splitToTeam;
 
 }

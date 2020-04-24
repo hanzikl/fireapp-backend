@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
@@ -34,12 +35,13 @@ class RecordOutcomeTest {
     void test_addOutcomeNotSplitToTeam() {
 
         UserState user = new TestUser(12L);
-        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, new BigDecimal("12.50"), false);
+        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, LocalDate.of(2018, 9, 11), new BigDecimal("12.50"), false);
 
         addRecordOutcomeUseCase.addOutcomeRecord(command);
 
         Outcome expectedOutcome = Outcome.builder()
                 .user(user)
+                .date(LocalDate.of(2018, 9, 11))
                 .amount(new BigDecimal("12.50"))
                 .splitToTeam(false)
                 .build();
@@ -50,12 +52,13 @@ class RecordOutcomeTest {
     @Test
     void test_addOutcomeSplitToTeam() {
         UserState user = new TestUser(7L);
-        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, new BigDecimal("843.00"), true);
+        AddRecordOutcomeCommand command = new AddRecordOutcomeCommand(user, LocalDate.of(2020, 4, 30), new BigDecimal("843.00"), true);
 
         addRecordOutcomeUseCase.addOutcomeRecord(command);
 
         Outcome expectedOutcome = Outcome.builder()
                 .user(user)
+                .date(LocalDate.of(2020, 4, 30))
                 .amount(new BigDecimal("843.00"))
                 .splitToTeam(true)
                 .build();
@@ -70,7 +73,8 @@ class RecordOutcomeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> addRecordOutcomeUseCase.addOutcomeRecord(new AddRecordOutcomeCommand(user, new BigDecimal("-1"), true)),
+                () -> addRecordOutcomeUseCase.addOutcomeRecord(new AddRecordOutcomeCommand(
+                        user, LocalDate.of(1989, 11, 17), new BigDecimal("-1"), true)),
                 "negative amount - exception must be thrown");
 
     }

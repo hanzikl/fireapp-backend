@@ -28,6 +28,7 @@ public class AddRecordOutcomeService implements AddRecordOutcomeUseCase {
         }
 
         Outcome outcome = Outcome.builder()
+                .date(command.getDate())
                 .amount(command.getAmount())
                 .user(command.getUser())
                 .splitToTeam(command.isSplitToTeam())
