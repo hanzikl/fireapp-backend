@@ -1,15 +1,15 @@
-package cz.princudev.fireapp.api.record.outcome.domain;
+package cz.princudev.fireapp.api.spending.update.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public interface OutcomeState {
+public interface SpendingState {
 
     Long getId();
 
     LocalDate getDate();
 
-    OutcomeCategory getCategory();
+    SpendingCategory getCategory();
 
     UserState getUser();
 

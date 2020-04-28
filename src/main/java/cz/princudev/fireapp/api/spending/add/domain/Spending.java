@@ -1,4 +1,4 @@
-package cz.princudev.fireapp.api.record.outcome.domain;
+package cz.princudev.fireapp.api.spending.add.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,13 +12,13 @@ import java.time.LocalDate;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class Outcome implements OutcomeState {
+public class Spending implements SpendingState {
 
     private final Long id;
 
     private final LocalDate date;
 
-    private final OutcomeCategory category;
+    private final SpendingCategory category;
 
     private final UserState user;
 

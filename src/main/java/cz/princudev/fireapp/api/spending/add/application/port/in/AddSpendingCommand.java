@@ -1,7 +1,7 @@
-package cz.princudev.fireapp.api.record.outcome.application.port.in;
+package cz.princudev.fireapp.api.spending.add.application.port.in;
 
-import cz.princudev.fireapp.api.record.outcome.domain.OutcomeCategory;
-import cz.princudev.fireapp.api.record.outcome.domain.UserState;
+import cz.princudev.fireapp.api.spending.add.domain.SpendingCategory;
+import cz.princudev.fireapp.api.spending.add.domain.UserState;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @RequiredArgsConstructor
-public class AddRecordOutcomeCommand {
+public class AddSpendingCommand {
 
     @NonNull
     private final UserState user;
 
     @NonNull
-    private final OutcomeCategory category;
+    private final SpendingCategory category;
 
     @NonNull
     private final LocalDate date;

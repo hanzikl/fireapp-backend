@@ -1,6 +1,6 @@
-package cz.princudev.fireapp.api.record.outcome.domain;
+package cz.princudev.fireapp.api.spending.add.domain;
 
-public enum OutcomeCategory {
+public enum SpendingCategory {
 
     FOOD_AND_DRINK,
     HOUSEHOLD_GOODS,

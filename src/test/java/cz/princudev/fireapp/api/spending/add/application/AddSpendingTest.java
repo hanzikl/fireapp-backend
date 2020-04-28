@@ -1,11 +1,11 @@
-package cz.princudev.fireapp.api.record.outcome.application;
+package cz.princudev.fireapp.api.spending.add.application;
 
-import cz.princudev.fireapp.api.record.outcome.application.port.in.AddRecordOutcomeCommand;
-import cz.princudev.fireapp.api.record.outcome.application.port.in.AddRecordOutcomeUseCase;
-import cz.princudev.fireapp.api.record.outcome.application.port.out.PersistOutcomePort;
-import cz.princudev.fireapp.api.record.outcome.domain.Outcome;
-import cz.princudev.fireapp.api.record.outcome.domain.OutcomeCategory;
-import cz.princudev.fireapp.api.record.outcome.domain.UserState;
+import cz.princudev.fireapp.api.spending.add.application.port.in.AddSpendingCommand;
+import cz.princudev.fireapp.api.spending.add.application.port.out.PersistSpendingPort;
+import cz.princudev.fireapp.api.spending.add.application.port.in.AddSpendingUseCase;
+import cz.princudev.fireapp.api.spending.add.domain.Spending;
+import cz.princudev.fireapp.api.spending.add.domain.SpendingCategory;
+import cz.princudev.fireapp.api.spending.add.domain.UserState;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -23,63 +23,63 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-class RecordOutcomeTest {
+class AddSpendingTest {
 
     @Mock
-    private final PersistOutcomePort persistOutcomePort = mock(PersistOutcomePort.class);
+    private final PersistSpendingPort persistSpendingPort = mock(PersistSpendingPort.class);
 
     @InjectMocks
-    private final AddRecordOutcomeUseCase addRecordOutcomeUseCase =
-            new AddRecordOutcomeService(persistOutcomePort);
+    private final AddSpendingUseCase addSpendingUseCase =
+            new AddSpendingService(persistSpendingPort);
 
     @Test
     void test_addOutcomeNotSplitToTeam() {
 
         UserState user = new TestUser(12L);
-        AddRecordOutcomeCommand command = AddRecordOutcomeCommand.builder()
+        AddSpendingCommand command = AddSpendingCommand.builder()
                 .user(user)
-                .category(OutcomeCategory.ALCOHOL)
+                .category(SpendingCategory.ALCOHOL)
                 .date(LocalDate.of(2018, 9, 11))
                 .amount(new BigDecimal("12.50"))
                 .splitToTeam(false)
                 .build();
 
-        addRecordOutcomeUseCase.addOutcomeRecord(command);
+        addSpendingUseCase.addOutcomeRecord(command);
 
-        Outcome expectedOutcome = Outcome.builder()
+        Spending expectedOutcome = Spending.builder()
                 .user(user)
-                .category(OutcomeCategory.ALCOHOL)
+                .category(SpendingCategory.ALCOHOL)
                 .date(LocalDate.of(2018, 9, 11))
                 .amount(new BigDecimal("12.50"))
                 .splitToTeam(false)
                 .build();
 
-        verify(persistOutcomePort).persistOutcome(eq(expectedOutcome));
+        verify(persistSpendingPort).persistSpending(eq(expectedOutcome));
     }
 
     @Test
     void test_addOutcomeSplitToTeam() {
         UserState user = new TestUser(7L);
 
-        AddRecordOutcomeCommand command = AddRecordOutcomeCommand.builder()
+        AddSpendingCommand command = AddSpendingCommand.builder()
                 .user(user)
-                .category(OutcomeCategory.HOLIDAY_AND_RELAX)
+                .category(SpendingCategory.HOLIDAY_AND_RELAX)
                 .date(LocalDate.of(2020, 4, 30))
                 .amount(new BigDecimal("843.00"))
                 .splitToTeam(true)
                 .build();
 
-        addRecordOutcomeUseCase.addOutcomeRecord(command);
+        addSpendingUseCase.addOutcomeRecord(command);
 
-        Outcome expectedOutcome = Outcome.builder()
+        Spending expectedOutcome = Spending.builder()
                 .user(user)
-                .category(OutcomeCategory.HOLIDAY_AND_RELAX)
+                .category(SpendingCategory.HOLIDAY_AND_RELAX)
                 .date(LocalDate.of(2020, 4, 30))
                 .amount(new BigDecimal("843.00"))
                 .splitToTeam(true)
                 .build();
 
-        verify(persistOutcomePort).persistOutcome(eq(expectedOutcome));
+        verify(persistSpendingPort).persistSpending(eq(expectedOutcome));
     }
 
     @Test
@@ -89,10 +89,10 @@ class RecordOutcomeTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> addRecordOutcomeUseCase.addOutcomeRecord(
-                        AddRecordOutcomeCommand.builder()
+                () -> addSpendingUseCase.addOutcomeRecord(
+                        AddSpendingCommand.builder()
                                 .user(user)
-                                .category(OutcomeCategory.FUN)
+                                .category(SpendingCategory.FUN)
                                 .date(LocalDate.of(2020, 4, 30))
                                 .amount(new BigDecimal("-1"))
                                 .splitToTeam(true)
