@@ -1,9 +1,7 @@
 package cz.princudev.fireapp.api.spending.query.application;
 
-import cz.princudev.fireapp.api.spending.query.FindSpendingByUserService;
-import cz.princudev.fireapp.api.spending.query.application.port.in.QuerySpendingByUserCommand;
-import cz.princudev.fireapp.api.spending.query.application.port.out.QuerySpendingByUserPort;
-import cz.princudev.fireapp.api.spending.query.application.port.out.QueryUserPort;
+import cz.princudev.fireapp.api.spending.query.application.port.out.FindSpendingByUserPort;
+import cz.princudev.fireapp.api.spending.query.application.port.out.FindUserPort;
 import cz.princudev.fireapp.api.spending.query.domain.SpendingCategory;
 import cz.princudev.fireapp.api.spending.query.domain.SpendingState;
 import cz.princudev.fireapp.api.spending.query.domain.UserState;
@@ -22,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,12 +28,12 @@ import static org.mockito.Mockito.when;
 class QuerySpendingByUserTest {
 
     @Mock
-    private final QuerySpendingByUserPort querySpendingByUserPort = mock(QuerySpendingByUserPort.class);
+    private final FindSpendingByUserPort findSpendingByUserPort = mock(FindSpendingByUserPort.class);
     @Mock
-    private final QueryUserPort queryUserPort = mock(QueryUserPort.class);
+    private final FindUserPort findUserPort = mock(FindUserPort.class);
 
     @InjectMocks
-    private final FindSpendingByUserService queryService = new FindSpendingByUserService(querySpendingByUserPort, queryUserPort);
+    private final FindSpendingByUserService queryService = new FindSpendingByUserService(findSpendingByUserPort, findUserPort);
 
     @Test
     void test_queryByUser() {
@@ -55,15 +54,13 @@ class QuerySpendingByUserTest {
                         .user(user)
                         .build());
 
-        when(queryUserPort.findById(eq(15L)))
+        when(findUserPort.findById(eq(15L)))
                 .thenReturn(user);
 
-        when(querySpendingByUserPort.findAllByUser(eq(user)))
+        when(findSpendingByUserPort.findAllByUser(eq(user)))
                 .thenReturn(expectedSpendingList);
 
-        List<SpendingState> result = queryService.findSpendingByUser(QuerySpendingByUserCommand.builder()
-                .userId(15L)
-                .build());
+        List<SpendingState> result = queryService.findSpendingByUser(15L);
 
         Assertions.assertEquals(expectedSpendingList, result);
     }
@@ -71,9 +68,13 @@ class QuerySpendingByUserTest {
     @Test
     void test_unknownUser() {
 
+        when(findUserPort.findById(eq(15L)))
+                .thenReturn(null);
 
-        Assertions.assertFalse(true, "todo");
-
+        assertThrows(
+                IllegalStateException.class,
+                () -> queryService.findSpendingByUser(15L),
+                "when user does not exists, exception must be thrown");
     }
 
     @Getter

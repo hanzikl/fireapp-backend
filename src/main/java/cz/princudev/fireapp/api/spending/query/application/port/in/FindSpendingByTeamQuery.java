@@ -5,8 +5,8 @@ import cz.princudev.fireapp.api.spending.query.domain.SpendingState;
 
 import java.util.List;
 
-public interface FindSpendingByUserQuery {
+public interface FindSpendingByTeamQuery {
 
-    List<SpendingState> findSpendingByUser(Long userId);
+    List<SpendingState> findSpendingByTeam(Long teamId);
 
 }
