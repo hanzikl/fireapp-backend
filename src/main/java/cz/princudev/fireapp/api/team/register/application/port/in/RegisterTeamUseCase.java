@@ -1,4 +1,4 @@
-package cz.princudev.fireapp.api.register.team.application.port.in;
+package cz.princudev.fireapp.api.team.register.application.port.in;
 
 import cz.princudev.fireapp.api.register.team.domain.TeamState;
 

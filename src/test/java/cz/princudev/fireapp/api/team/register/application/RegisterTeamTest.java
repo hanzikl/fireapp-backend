@@ -1,10 +1,10 @@
-package cz.princudev.fireapp.api.register.team.application;
+package cz.princudev.fireapp.api.team.register.application;
 
 
-import cz.princudev.fireapp.api.register.team.application.port.in.RegisterTeamCommand;
-import cz.princudev.fireapp.api.register.team.application.port.in.RegisterTeamUseCase;
-import cz.princudev.fireapp.api.register.team.application.port.out.FindUserAndTeamPort;
-import cz.princudev.fireapp.api.register.team.application.port.out.PersistTeamPort;
+import cz.princudev.fireapp.api.team.register.application.port.in.RegisterTeamCommand;
+import cz.princudev.fireapp.api.team.register.application.port.in.RegisterTeamUseCase;
+import cz.princudev.fireapp.api.team.register.application.port.out.FindUserAndTeamPort;
+import cz.princudev.fireapp.api.team.register.application.port.out.PersistTeamPort;
 import cz.princudev.fireapp.api.register.team.domain.Team;
 import cz.princudev.fireapp.api.register.team.domain.TeamState;
 import cz.princudev.fireapp.api.register.team.domain.UserState;

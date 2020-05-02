@@ -1,8 +1,8 @@
-package cz.princudev.fireapp.api.register.user.application;
+package cz.princudev.fireapp.api.user.register.application;
 
-import cz.princudev.fireapp.api.register.user.application.port.in.RegisterUserCommand;
-import cz.princudev.fireapp.api.register.user.application.port.in.RegisterUserUseCase;
-import cz.princudev.fireapp.api.register.user.application.port.out.PersistUserPort;
+import cz.princudev.fireapp.api.user.register.application.port.in.RegisterUserCommand;
+import cz.princudev.fireapp.api.user.register.application.port.in.RegisterUserUseCase;
+import cz.princudev.fireapp.api.user.register.application.port.out.PersistUserPort;
 import cz.princudev.fireapp.api.register.user.domain.User;
 import cz.princudev.fireapp.api.register.user.domain.UserState;
 import lombok.extern.slf4j.Slf4j;
