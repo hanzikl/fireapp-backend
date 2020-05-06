@@ -1,4 +1,4 @@
-package cz.princudev.fireapp.api.register.user.domain;
+package cz.princudev.fireapp.api.user.register.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

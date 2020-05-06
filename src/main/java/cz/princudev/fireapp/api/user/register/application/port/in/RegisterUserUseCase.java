@@ -1,6 +1,6 @@
 package cz.princudev.fireapp.api.user.register.application.port.in;
 
-import cz.princudev.fireapp.api.register.user.domain.UserState;
+import cz.princudev.fireapp.api.user.register.domain.UserState;
 
 public interface RegisterUserUseCase {
 

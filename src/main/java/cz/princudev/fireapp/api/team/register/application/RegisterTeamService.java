@@ -4,9 +4,9 @@ import cz.princudev.fireapp.api.team.register.application.port.in.RegisterTeamCo
 import cz.princudev.fireapp.api.team.register.application.port.in.RegisterTeamUseCase;
 import cz.princudev.fireapp.api.team.register.application.port.out.FindUserAndTeamPort;
 import cz.princudev.fireapp.api.team.register.application.port.out.PersistTeamPort;
-import cz.princudev.fireapp.api.register.team.domain.Team;
-import cz.princudev.fireapp.api.register.team.domain.TeamState;
-import cz.princudev.fireapp.api.register.team.domain.UserState;
+import cz.princudev.fireapp.api.team.register.domain.Team;
+import cz.princudev.fireapp.api.team.register.domain.TeamState;
+import cz.princudev.fireapp.api.team.register.domain.UserState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

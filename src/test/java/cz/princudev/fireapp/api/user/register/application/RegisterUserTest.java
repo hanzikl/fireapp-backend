@@ -4,7 +4,7 @@ package cz.princudev.fireapp.api.user.register.application;
 import cz.princudev.fireapp.api.user.register.application.port.in.RegisterUserCommand;
 import cz.princudev.fireapp.api.user.register.application.port.in.RegisterUserUseCase;
 import cz.princudev.fireapp.api.user.register.application.port.out.PersistUserPort;
-import cz.princudev.fireapp.api.register.user.domain.User;
+import cz.princudev.fireapp.api.user.register.domain.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

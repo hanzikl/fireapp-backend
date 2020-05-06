@@ -1,7 +1,7 @@
 package cz.princudev.fireapp.api.team.register.application.port.out;
 
-import cz.princudev.fireapp.api.register.team.domain.TeamState;
-import cz.princudev.fireapp.api.register.team.domain.UserState;
+import cz.princudev.fireapp.api.team.register.domain.TeamState;
+import cz.princudev.fireapp.api.team.register.domain.UserState;
 
 public interface FindUserAndTeamPort {
 
