@@ -5,6 +5,6 @@ import cz.princudev.fireapp.api.team.adduser.domain.TeamState;
 
 public interface PersistTeamPort {
 
-    TeamState persistTeam(TeamState userState);
+    TeamState persistTeam(TeamState teamState);
 
 }
