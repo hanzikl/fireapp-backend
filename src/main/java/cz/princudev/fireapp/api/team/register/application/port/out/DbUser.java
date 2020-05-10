@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity(name = "team.register.DbUser")
 @Table(name = "users")
 @Data
-@ToString
+@ToString(exclude = "team")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
